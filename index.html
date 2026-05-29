@@ -8,12 +8,48 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #0d0d0d;
-            color: #e0e0e0;
+            background-color: var(--bg);
+            color: var(--text);
             font-family: 'Share Tech Mono', monospace;
             min-height: 100vh;
             padding: 60px 40px;
             overflow-x: hidden;
+            transition: all 0.3s;
+        }
+
+        :root {
+            --bg: #0d0d0d;
+            --text: #e0e0e0;
+            --purple: #bd93f9;
+            --pink: #ff79c6;
+            --green: #50fa7b;
+            --blue: #8be9fd;
+            --dim: #6272a4;
+            --card: #1a1a2e;
+        }
+
+        body.theme-green {
+            --bg: #0d1a0d;
+            --purple: #50fa7b;
+            --pink: #69ff47;
+            --green: #8be9fd;
+            --card: #0d200d;
+        }
+
+        body.theme-red {
+            --bg: #1a0d0d;
+            --purple: #ff5555;
+            --pink: #ff79c6;
+            --green: #ffb86c;
+            --card: #200d0d;
+        }
+
+        body.theme-blue {
+            --bg: #0d0d1a;
+            --purple: #8be9fd;
+            --pink: #bd93f9;
+            --green: #50fa7b;
+            --card: #0d0d20;
         }
 
         canvas {
@@ -48,35 +84,53 @@
             z-index: 1;
         }
 
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .theme-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .theme-btn:hover { transform: scale(1.3); border-color: white; }
+        .theme-btn.default { background: #bd93f9; }
+        .theme-btn.green { background: #50fa7b; }
+        .theme-btn.red { background: #ff5555; }
+        .theme-btn.blue { background: #8be9fd; }
+
         h1 {
             font-size: 3em;
-            color: #bd93f9;
-            text-shadow: 0 0 20px #bd93f9;
+            color: var(--purple);
+            text-shadow: 0 0 20px var(--purple);
             margin-bottom: 10px;
             min-height: 1.2em;
         }
 
-        h1.glitch {
-            animation: glitch 0.3s infinite;
-        }
+        h1.glitch { animation: glitch 0.3s infinite; }
 
         @keyframes glitch {
-            0% { text-shadow: 0 0 20px #bd93f9; transform: translate(0); }
-            20% { text-shadow: -2px 0 #ff79c6, 2px 0 #8be9fd; transform: translate(-2px, 1px); }
-            40% { text-shadow: 2px 0 #ff79c6, -2px 0 #8be9fd; transform: translate(2px, -1px); }
-            60% { text-shadow: 0 0 20px #bd93f9; transform: translate(0); }
-            80% { text-shadow: -1px 0 #ff79c6; transform: translate(1px); }
-            100% { text-shadow: 0 0 20px #bd93f9; transform: translate(0); }
+            0% { text-shadow: 0 0 20px var(--purple); transform: translate(0); }
+            20% { text-shadow: -2px 0 var(--pink), 2px 0 var(--blue); transform: translate(-2px, 1px); }
+            40% { text-shadow: 2px 0 var(--pink), -2px 0 var(--blue); transform: translate(2px, -1px); }
+            60% { text-shadow: 0 0 20px var(--purple); transform: translate(0); }
+            80% { text-shadow: -1px 0 var(--pink); transform: translate(1px); }
+            100% { text-shadow: 0 0 20px var(--purple); transform: translate(0); }
         }
 
-        .tagline {
-            color: #6272a4;
-            margin-bottom: 50px;
-            font-size: 0.9em;
-        }
+        .tagline { color: var(--dim); margin-bottom: 50px; font-size: 0.9em; }
 
         h2 {
-            color: #ff79c6;
+            color: var(--pink);
             margin-bottom: 15px;
             font-size: 1.2em;
             text-transform: uppercase;
@@ -85,7 +139,7 @@
 
         .section {
             margin-bottom: 40px;
-            border-left: 2px solid #bd93f9;
+            border-left: 2px solid var(--purple);
             padding-left: 20px;
         }
 
@@ -94,45 +148,44 @@
             padding: 10px;
             border-radius: 4px;
             transition: all 0.2s;
-            cursor: default;
+            cursor: pointer;
         }
 
         .script:hover {
-            background: #1a1a2e;
+            background: var(--card);
             box-shadow: 0 0 15px rgba(189, 147, 249, 0.2);
-            border-left: 2px solid #50fa7b;
+            border-left: 2px solid var(--green);
             padding-left: 8px;
         }
 
-        .script-name {
-            color: #50fa7b;
-        }
+        .script-name { color: var(--green); }
+        .script-desc { color: var(--dim); font-size: 0.85em; margin-top: 3px; }
 
-        .script-desc {
-            color: #6272a4;
+        .script-expanded {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--card);
+            border-radius: 4px;
+            border-left: 2px solid var(--purple);
+            color: var(--text);
             font-size: 0.85em;
-            margin-top: 3px;
+            line-height: 1.8;
         }
 
-        a {
-            color: #8be9fd;
-            text-decoration: none;
-        }
+        .script.open .script-expanded { display: block; }
+        .script.open { background: var(--card); }
 
-        a:hover {
-            text-shadow: 0 0 10px #8be9fd;
-        }
+        a { color: var(--blue); text-decoration: none; }
+        a:hover { text-shadow: 0 0 10px var(--blue); }
 
-        .prompt::before {
-            content: '> ';
-            color: #ff79c6;
-        }
+        .prompt::before { content: '> '; color: var(--pink); }
 
         .cursor {
             display: inline-block;
             width: 10px;
             height: 1em;
-            background: #bd93f9;
+            background: var(--purple);
             animation: blink 1s infinite;
             vertical-align: text-bottom;
         }
@@ -150,35 +203,25 @@
         }
 
         .stat {
-            background: #1a1a2e;
+            background: var(--card);
             padding: 15px;
             border-radius: 4px;
-            border: 1px solid #bd93f950;
+            border: 1px solid rgba(189,147,249,0.3);
             text-align: center;
             transition: all 0.2s;
         }
 
         .stat:hover {
             box-shadow: 0 0 15px rgba(189, 147, 249, 0.3);
-            border-color: #bd93f9;
+            border-color: var(--purple);
         }
 
-        .stat-number {
-            font-size: 2em;
-            color: #bd93f9;
-            text-shadow: 0 0 10px #bd93f9;
-        }
-
-        .stat-label {
-            color: #6272a4;
-            font-size: 0.75em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        .stat-number { font-size: 2em; color: var(--purple); text-shadow: 0 0 10px var(--purple); }
+        .stat-label { color: var(--dim); font-size: 0.75em; text-transform: uppercase; letter-spacing: 2px; }
 
         .now-playing {
-            background: #1a1a2e;
-            border: 1px solid #50fa7b50;
+            background: var(--card);
+            border: 1px solid rgba(80,250,123,0.3);
             border-radius: 4px;
             padding: 15px;
             margin-bottom: 40px;
@@ -190,7 +233,7 @@
         .playing-dot {
             width: 8px;
             height: 8px;
-            background: #50fa7b;
+            background: var(--green);
             border-radius: 50%;
             animation: pulse 1.5s infinite;
             flex-shrink: 0;
@@ -201,20 +244,100 @@
             50% { box-shadow: 0 0 0 8px rgba(80, 250, 123, 0); }
         }
 
-        .playing-text {
-            color: #50fa7b;
-            font-size: 0.85em;
+        .playing-text { color: var(--green); font-size: 0.85em; }
+        .playing-song { color: var(--text); font-size: 0.9em; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
         }
 
-        .playing-song {
-            color: #e0e0e0;
+        .modal.open { display: flex; }
+
+        .modal-content {
+            background: var(--card);
+            border: 1px solid var(--purple);
+            border-radius: 4px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(189,147,249,0.3);
+        }
+
+        .modal-title { color: var(--purple); font-size: 1.5em; margin-bottom: 20px; }
+        .modal-close { float: right; cursor: pointer; color: var(--pink); font-size: 1.2em; }
+
+        input, textarea {
+            width: 100%;
+            background: #0d0d0d;
+            border: 1px solid var(--dim);
+            color: var(--text);
+            font-family: 'Share Tech Mono', monospace;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
             font-size: 0.9em;
         }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--purple);
+            box-shadow: 0 0 10px rgba(189,147,249,0.2);
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--purple);
+            color: var(--purple);
+            font-family: 'Share Tech Mono', monospace;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: var(--purple);
+            color: #0d0d0d;
+        }
+
+        .contact-link {
+            cursor: pointer;
+            color: var(--blue);
+        }
+
+        .contact-link:hover { text-shadow: 0 0 10px var(--blue); }
     </style>
 </head>
 <body>
     <canvas id="matrix"></canvas>
     <div class="scanlines"></div>
+
+    <div class="theme-switcher">
+        <div class="theme-btn default" onclick="setTheme('')" title="purple"></div>
+        <div class="theme-btn green" onclick="setTheme('green')" title="green"></div>
+        <div class="theme-btn red" onclick="setTheme('red')" title="red"></div>
+        <div class="theme-btn blue" onclick="setTheme('blue')" title="blue"></div>
+    </div>
+
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">[ x ]</span>
+            <div class="modal-title">> contact</div>
+            <input type="text" placeholder="name" id="contactName" />
+            <input type="email" placeholder="email" id="contactEmail" />
+            <textarea placeholder="message" rows="4" id="contactMsg"></textarea>
+            <button onclick="submitContact()">send_message()</button>
+            <p id="formResponse" style="margin-top:10px; color: var(--green); display:none;">message sent!</p>
+        </div>
+    </div>
     
     <div class="container">
         <h1 id="title"></h1>
@@ -245,39 +368,68 @@
 
         <div class="section">
             <h2>scripts</h2>
-            <div class="script">
+
+            <div class="script" onclick="toggleScript(this)">
                 <div class="script-name prompt">organizer.py</div>
                 <div class="script-desc">sorts files into folders automatically by file type</div>
+                <div class="script-expanded">
+                    asks which folder to organize, then sorts every file into subfolders like Music/, Images/, Documents/ etc based on extension. supports mp3, jpg, pdf, zip and more. built with os and shutil.
+                </div>
             </div>
-            <div class="script">
+
+            <div class="script" onclick="toggleScript(this)">
                 <div class="script-name prompt">randompick.py</div>
                 <div class="script-desc">picks random songs from my music library + plays them</div>
+                <div class="script-expanded">
+                    walks through all subfolders recursively, finds every mp3, lets you pick how many songs you want, then plays them one by one using mpg123. built with os, random, and subprocess.
+                </div>
             </div>
-            <div class="script">
+
+            <div class="script" onclick="toggleScript(this)">
                 <div class="script-name prompt">moodpicker.py</div>
                 <div class="script-desc">recommends music based on how im feeling</div>
+                <div class="script-expanded">
+                    maps moods to specific music folders — happy goes to Dakota's MP3, sad goes to Ethel Cain, angry goes to Frightened Little Asshole, chill goes to Run rabbit run. picks a random song from the matching folder.
+                </div>
             </div>
-            <div class="script">
+
+            <div class="script" onclick="toggleScript(this)">
                 <div class="script-name prompt">lyrics.py</div>
                 <div class="script-desc">fetches lyrics from genius api</div>
+                <div class="script-expanded">
+                    uses the lyricsgenius library to hit the genius api. type in an artist and song title and it fetches and prints the full lyrics in your terminal. requires a genius api key.
+                </div>
             </div>
-            <div class="script">
+
+            <div class="script" onclick="toggleScript(this)">
                 <div class="script-name prompt">facts.py</div>
                 <div class="script-desc">pulls random facts from the internet</div>
+                <div class="script-expanded">
+                    hits the uselessfacts api with no api key needed. uses urllib and json which are built into python. run it multiple times for different facts every time.
+                </div>
             </div>
-            <div class="script">
+
+            <div class="script" onclick="toggleScript(this)">
                 <div class="script-name prompt">music_backup.sh</div>
                 <div class="script-desc">logs my entire music library every night at midnight</div>
+                <div class="script-expanded">
+                    bash script scheduled via cron to run at midnight every day. recursively lists every file in ~/Music and appends it to music_log.txt with a timestamp.
+                </div>
             </div>
-            <div class="script">
+
+            <div class="script" onclick="toggleScript(this)">
                 <div class="script-name prompt">auto_organizer.py</div>
                 <div class="script-desc">auto-organizes downloads every monday at 9am</div>
+                <div class="script-expanded">
+                    same as organizer.py but with the folder hardcoded to ~/Downloads so it can run automatically via cron without needing user input. scheduled every monday at 9am.
+                </div>
             </div>
         </div>
 
         <div class="section">
             <h2>links</h2>
             <p class="prompt"><a href="https://github.com/levimjones20-debug">github</a></p>
+            <p class="prompt" style="margin-top:10px"><span class="contact-link" onclick="openModal()">contact</span></p>
         </div>
     </div>
 
@@ -294,7 +446,6 @@
                 setTimeout(type, 100);
             } else {
                 titleEl.innerHTML = title + '<span class="cursor"></span>';
-                // random glitch
                 setInterval(() => {
                     if (Math.random() < 0.1) {
                         titleEl.classList.add('glitch');
@@ -305,13 +456,12 @@
         }
         type();
 
-        // matrix background
+        // matrix
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        
-        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEF';
+        const chars = 'アイウエオカキクケコ0123456789ABCDEF';
         const fontSize = 14;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
@@ -330,7 +480,7 @@
         }
         setInterval(drawMatrix, 50);
 
-        // animate stats
+        // stats
         function animateCount(el, target, duration) {
             let start = 0;
             const step = target / (duration / 16);
@@ -354,6 +504,40 @@
             "Cara Cunningham - I Want Your Bite",
         ];
         document.getElementById('song').textContent = songs[Math.floor(Math.random() * songs.length)];
+
+        // script toggle
+        function toggleScript(el) {
+            el.classList.toggle('open');
+        }
+
+        // theme switcher
+        function setTheme(theme) {
+            document.body.className = theme ? 'theme-' + theme : '';
+        }
+
+        // modal
+        function openModal() {
+            document.getElementById('contactModal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('contactModal').classList.remove('open');
+        }
+
+        function submitContact() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const msg = document.getElementById('contactMsg').value;
+            if (name && email && msg) {
+                document.getElementById('formResponse').style.display = 'block';
+                setTimeout(closeModal, 1500);
+            }
+        }
+
+        // close modal on background click
+        document.getElementById('contactModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
     </script>
 </body>
 </html>
