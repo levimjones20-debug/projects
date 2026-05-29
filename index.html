@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>poisondaggers</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #0d0d0d;
+            color: #e0e0e0;
+            font-family: 'Share Tech Mono', monospace;
+            min-height: 100vh;
+            padding: 60px 40px;
+            overflow-x: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0.05;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.1) 2px,
+                rgba(0,0,0,0.1) 4px
+            );
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #bd93f9;
+            text-shadow: 0 0 20px #bd93f9;
+            margin-bottom: 10px;
+            min-height: 1.2em;
+        }
+
+        h1.glitch {
+            animation: glitch 0.3s infinite;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0 0 20px #bd93f9; transform: translate(0); }
+            20% { text-shadow: -2px 0 #ff79c6, 2px 0 #8be9fd; transform: translate(-2px, 1px); }
+            40% { text-shadow: 2px 0 #ff79c6, -2px 0 #8be9fd; transform: translate(2px, -1px); }
+            60% { text-shadow: 0 0 20px #bd93f9; transform: translate(0); }
+            80% { text-shadow: -1px 0 #ff79c6; transform: translate(1px); }
+            100% { text-shadow: 0 0 20px #bd93f9; transform: translate(0); }
+        }
+
+        .tagline {
+            color: #6272a4;
+            margin-bottom: 50px;
+            font-size: 0.9em;
+        }
+
+        h2 {
+            color: #ff79c6;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            border-left: 2px solid #bd93f9;
+            padding-left: 20px;
+        }
+
+        .script {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .script:hover {
+            background: #1a1a2e;
+            box-shadow: 0 0 15px rgba(189, 147, 249, 0.2);
+            border-left: 2px solid #50fa7b;
+            padding-left: 8px;
+        }
+
+        .script-name {
+            color: #50fa7b;
+        }
+
+        .script-desc {
+            color: #6272a4;
+            font-size: 0.85em;
+            margin-top: 3px;
+        }
+
+        a {
+            color: #8be9fd;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-shadow: 0 0 10px #8be9fd;
+        }
+
+        .prompt::before {
+            content: '> ';
+            color: #ff79c6;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1em;
+            background: #bd93f9;
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .stat {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #bd93f950;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .stat:hover {
+            box-shadow: 0 0 15px rgba(189, 147, 249, 0.3);
+            border-color: #bd93f9;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            color: #bd93f9;
+            text-shadow: 0 0 10px #bd93f9;
+        }
+
+        .stat-label {
+            color: #6272a4;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .now-playing {
+            background: #1a1a2e;
+            border: 1px solid #50fa7b50;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .playing-dot {
+            width: 8px;
+            height: 8px;
+            background: #50fa7b;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(80, 250, 123, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(80, 250, 123, 0); }
+        }
+
+        .playing-text {
+            color: #50fa7b;
+            font-size: 0.85em;
+        }
+
+        .playing-song {
+            color: #e0e0e0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <div class="scanlines"></div>
+    
+    <div class="container">
+        <h1 id="title"></h1>
+        <p class="tagline">// linux mint &middot; python &middot; bash &middot; making stuff</p>
+
+        <div class="now-playing">
+            <div class="playing-dot"></div>
+            <div>
+                <div class="playing-text">now vibing to</div>
+                <div class="playing-song" id="song">loading...</div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number" id="script-count">0</div>
+                <div class="stat-label">scripts</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="line-count">0</div>
+                <div class="stat-label">lines of code</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="uptime">0</div>
+                <div class="stat-label">days coding</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>scripts</h2>
+            <div class="script">
+                <div class="script-name prompt">organizer.py</div>
+                <div class="script-desc">sorts files into folders automatically by file type</div>
+            </div>
+            <div class="script">
+                <div class="script-name prompt">randompick.py</div>
+                <div class="script-desc">picks random songs from my music library + plays them</div>
+            </div>
+            <div class="script">
+                <div class="script-name prompt">moodpicker.py</div>
+                <div class="script-desc">recommends music based on how im feeling</div>
+            </div>
+            <div class="script">
+                <div class="script-name prompt">lyrics.py</div>
+                <div class="script-desc">fetches lyrics from genius api</div>
+            </div>
+            <div class="script">
+                <div class="script-name prompt">facts.py</div>
+                <div class="script-desc">pulls random facts from the internet</div>
+            </div>
+            <div class="script">
+                <div class="script-name prompt">music_backup.sh</div>
+                <div class="script-desc">logs my entire music library every night at midnight</div>
+            </div>
+            <div class="script">
+                <div class="script-name prompt">auto_organizer.py</div>
+                <div class="script-desc">auto-organizes downloads every monday at 9am</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>links</h2>
+            <p class="prompt"><a href="https://github.com/levimjones20-debug">github</a></p>
+        </div>
+    </div>
+
+    <script>
+        // typing effect
+        const title = "poisondaggers";
+        let i = 0;
+        const titleEl = document.getElementById('title');
+        
+        function type() {
+            if (i < title.length) {
+                titleEl.innerHTML = title.slice(0, i+1) + '<span class="cursor"></span>';
+                i++;
+                setTimeout(type, 100);
+            } else {
+                titleEl.innerHTML = title + '<span class="cursor"></span>';
+                // random glitch
+                setInterval(() => {
+                    if (Math.random() < 0.1) {
+                        titleEl.classList.add('glitch');
+                        setTimeout(() => titleEl.classList.remove('glitch'), 300);
+                    }
+                }, 2000);
+            }
+        }
+        type();
+
+        // matrix background
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEF';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#bd93f9';
+            ctx.font = fontSize + 'px monospace';
+            drops.forEach((y, i) => {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(char, i * fontSize, y * fontSize);
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
+        }
+        setInterval(drawMatrix, 50);
+
+        // animate stats
+        function animateCount(el, target, duration) {
+            let start = 0;
+            const step = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += step;
+                if (start >= target) { el.textContent = target; clearInterval(timer); }
+                else el.textContent = Math.floor(start);
+            }, 16);
+        }
+
+        animateCount(document.getElementById('script-count'), 7, 1000);
+        animateCount(document.getElementById('line-count'), 149, 1500);
+        animateCount(document.getElementById('uptime'), 1, 500);
+
+        // now playing
+        const songs = [
+            "Simon Curtis - Flesh",
+            "Mitski - I Bet on Losing Dogs",
+            "Ethel Cain - Strangers",
+            "Simon Curtis - Super Psycho Love",
+            "Cara Cunningham - I Want Your Bite",
+        ];
+        document.getElementById('song').textContent = songs[Math.floor(Math.random() * songs.length)];
+    </script>
+</body>
+</html>
