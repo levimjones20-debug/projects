@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Our Flag Means Death</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0e1a;
+            color: #d4b896;
+            font-family: 'Crimson Text', serif;
+            text-align: center;
+        }
+
+        .hero {
+            padding: 100px 20px;
+            border-bottom: 1px solid #d4b89650;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4em;
+            color: #c9a84c;
+            text-shadow: 0 0 30px rgba(201, 168, 76, 0.4);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.4em;
+            font-style: italic;
+            color: #8a9bb5;
+        }
+
+        .characters {
+            padding: 80px 40px;
+        }
+
+        .characters h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5em;
+            color: #c9a84c;
+            margin-bottom: 50px;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background: #0f1628;
+            border: 1px solid #c9a84c50;
+            border-radius: 8px;
+            padding: 25px;
+            width: 280px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .card:hover {
+            border-color: #c9a84c;
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-family: 'Cinzel', serif;
+            color: #c9a84c;
+            margin-bottom: 8px;
+        }
+
+        .card .role {
+            color: #8a9bb5;
+            font-style: italic;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+        }
+
+        .card .desc {
+            color: #d4b896;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        .quotes {
+    padding: 80px 40px;
+    border-top: 1px solid #d4b89650;
+}
+
+.quotes h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5em;
+    color: #c9a84c;
+    margin-bottom: 50px;
+}
+
+.quote-box {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.quote-text {
+    font-size: 1.6em;
+    font-style: italic;
+    color: #d4b896;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.quote-author {
+    color: #8a9bb5;
+    margin-bottom: 30px;
+}
+
+button {
+    background: transparent;
+    border: 1px solid #c9a84c;
+    color: #c9a84c;
+    font-family: 'Cinzel', serif;
+    padding: 10px 25px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 0.9em;
+}
+
+button:hover {
+    background: #c9a84c;
+    color: #0a0e1a;
+}
+.quiz {
+    padding: 80px 40px;
+    border-top: 1px solid #d4b89650;
+}
+
+.quiz h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5em;
+    color: #c9a84c;
+    margin-bottom: 50px;
+}
+
+.question {
+    font-size: 1.4em;
+    color: #d4b896;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.option-btn {
+    background: #0f1628;
+    border: 1px solid #c9a84c50;
+    color: #d4b896;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1em;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.option-btn:hover {
+    border-color: #c9a84c;
+    background: #1a2440;
+    color: #c9a84c;
+}
+
+.result {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #0f1628;
+    border: 1px solid #c9a84c;
+    border-radius: 8px;
+    padding: 30px;
+}
+
+.result h3 {
+    font-family: 'Cinzel', serif;
+    color: #c9a84c;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.result p {
+    color: #d4b896;
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Our Flag Means Death</h1>
+        <p>a tale of pirates, love, and chaos on the high seas</p>
+    </div>
+
+    <div class="characters">
+        <h2>The Crew</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Stede Bonnet</h3>
+                <div class="role">The Gentleman Pirate</div>
+                <div class="desc">A wealthy aristocrat who abandoned his comfortable life to become a pirate. Charming, naive, and surprisingly lovable.</div>
+            </div>
+            <div class="card">
+                <h3>Edward Teach</h3>
+                <div class="role">Blackbeard</div>
+                <div class="desc">The most feared pirate on the seas. Terrifying on the outside, surprisingly soft on the inside - especially around a certain gentleman.</div>
+            </div>
+            <div class="card">
+                <h3>Lucius Spriggs</h3>
+                <div class="role">Crew Scribe</div>
+                <div class="desc">The ship's record keeper with a sharp tongue and even sharper observations. Has a talent for being in the wrong place at the right time.</div>
+            </div>
+            <div class="card">
+                <h3>Oluwande Boodhari</h3>
+                <div class="role">Crew Member</div>
+                <div class="desc">Kind, level-headed, and one of the most sensible people on the ship. A loyal friend and the voice of reason in absolute chaos.</div>
+            </div>
+            <div class="card">
+                <h3>Buttons</h3>
+                <div class="role">Sailor & Seagull Enthusiast</div>
+                <div class="desc">A weathered sailor with a deep spiritual connection to the sea - and seagulls. May or may not be able to turn into a bird.</div>
+            </div>
+            <div class="card">
+                <h3>Izzy Hands</h3>
+                <div class="role">First Mate</div>
+                <div class="desc">Blackbeard's fiercely loyal first mate. Gruff, intense, and deeply complicated. His journey across the series is one of the best.</div>
+            </div>
+        </div>
+    </div>
+    <div class="quotes">
+    <h2>Famous Words</h2>
+    <div class="quote-box">
+        <p class="quote-text" id="quote-text">"I am going to be the most feared pirate who ever lived."</p>
+        <p class="quote-author" id="quote-author">— Stede Bonnet</p>
+        <button onclick="newQuote()">another one</button>
+    </div>
+</div>
+<div class="quiz">
+    <h2>Which Crew Member Are You?</h2>
+    <div id="quiz-container">
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <div class="result" id="result" style="display:none"></div>
+    </div>
+</div>
+<script>
+const quotes = [
+    { text: "I am going to be the most feared pirate who ever lived.", author: "Stede Bonnet" },
+    { text: "I've been doing a lot of thinking and I think I might be a good person.", author: "Blackbeard" },
+    { text: "I just want to be loved. Is that so wrong?", author: "Stede Bonnet" },
+    { text: "You're the Blackbeard. You're the most feared pirate who ever lived.", author: "Stede Bonnet" },
+    { text: "I'm not going to hurt you. I'm going to teach you.", author: "Blackbeard" },
+    { text: "This is my ship and I'll cry if I want to.", author: "Stede Bonnet" },
+    { text: "He's a good man. Probably the best I've ever known.", author: "Izzy Hands" },
+]
+
+function newQuote() {
+    const q = quotes[Math.floor(Math.random() * quotes.length)]
+    document.getElementById('quote-text').textContent = '"' + q.text + '"'
+    document.getElementById('quote-author').textContent = '— ' + q.author
+}
+const questions = [
+    {
+        q: "Your ship is under attack. What do you do?",
+        options: [
+            { text: "Offer the attackers tea and a chat", char: "stede" },
+            { text: "Strike terror into their hearts", char: "blackbeard" },
+            { text: "Document everything for the record", char: "lucius" },
+            { text: "Stay calm and help wherever needed", char: "oluwande" },
+            { text: "Consult the seagulls for guidance", char: "buttons" },
+            { text: "Bark orders and get it done", char: "izzy" },
+        ]
+    },
+    {
+        q: "What's your ideal evening?",
+        options: [
+            { text: "Reading in my beautifully decorated cabin", char: "stede" },
+            { text: "Staring dramatically into the ocean", char: "blackbeard" },
+            { text: "Gossiping with my best friend", char: "lucius" },
+            { text: "Hanging out and keeping the peace", char: "oluwande" },
+            { text: "Communing with nature", char: "buttons" },
+            { text: "Sharpening my weapons", char: "izzy" },
+        ]
+    },
+    {
+        q: "How do people describe you?",
+        options: [
+            { text: "Lovably chaotic", char: "stede" },
+            { text: "Terrifying but misunderstood", char: "blackbeard" },
+            { text: "Witty and observant", char: "lucius" },
+            { text: "The reliable one", char: "oluwande" },
+            { text: "Mysterious and a little weird", char: "buttons" },
+            { text: "Intense and loyal", char: "izzy" },
+        ]
+    },
+]
+
+const results = {
+    stede: { name: "Stede Bonnet", desc: "You're charming, creative, and a little chaotic — but people can't help but love you. You lead with your heart and bring beauty to everything you do." },
+    blackbeard: { name: "Edward Teach (Blackbeard)", desc: "Beneath that fearsome exterior is someone just trying to figure themselves out. You're passionate, intense, and capable of great change." },
+    lucius: { name: "Lucius Spriggs", desc: "Sharp, witty, and always paying attention. You notice everything and aren't afraid to say exactly what you think." },
+    oluwande: { name: "Oluwande Boodhari", desc: "You're the steady, reliable heart of any group. People trust you because you're genuinely kind and level-headed." },
+    buttons: { name: "Buttons", desc: "You march to the beat of your own drum — or seagull. Deeply connected to something greater, you're one of a kind." },
+    izzy: { name: "Izzy Hands", desc: "Fiercely loyal and deeply complicated. Your journey is one of the most profound — you've been through it and come out the other side." },
+}
+
+let currentQ = 0
+let scores = { stede: 0, blackbeard: 0, lucius: 0, oluwande: 0, buttons: 0, izzy: 0 }
+
+function loadQuestion() {
+    const q = questions[currentQ]
+    document.getElementById('question').textContent = q.q
+    const optionsEl = document.getElementById('options')
+    optionsEl.innerHTML = ''
+    q.options.forEach(opt => {
+        const btn = document.createElement('button')
+        btn.className = 'option-btn'
+        btn.textContent = opt.text
+        btn.onclick = () => answer(opt.char)
+        optionsEl.appendChild(btn)
+    })
+}
+
+function answer(char) {
+    scores[char]++
+    currentQ++
+    if (currentQ < questions.length) {
+        loadQuestion()
+    } else {
+        showResult()
+    }
+}
+
+function showResult() {
+    const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b)
+    const r = results[winner]
+    document.getElementById('options').style.display = 'none'
+    document.getElementById('question').style.display = 'none'
+    const resultEl = document.getElementById('result')
+    resultEl.style.display = 'block'
+    resultEl.innerHTML = `
+        <h3>You are ${r.name}!</h3>
+        <p>${r.desc}</p>
+        <button onclick="resetQuiz()">take it again</button>
+    `
+}
+
+function resetQuiz() {
+    currentQ = 0
+    scores = { stede: 0, blackbeard: 0, lucius: 0, oluwande: 0, buttons: 0, izzy: 0 }
+    document.getElementById('options').style.display = 'flex'
+    document.getElementById('question').style.display = 'block'
+    document.getElementById('result').style.display = 'none'
+    loadQuestion()
+}
+
+loadQuestion()
+</script>
+</body>
+</html>
